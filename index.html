@@ -88,5 +88,27 @@
   </footer>
 
   <script src="app.js"></script>
+  <script>
+    // Fixed fetchStats function with proper error handling
+    function fetchStats() {
+      const output = document.getElementById('stats-output');
+      output.textContent = 'Fetching stats…';
+
+      fetch('https://httpbin.org/get')
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error('HTTP ' + response.status);
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          output.textContent = 'Stats loaded successfully!';
+        })
+        .catch(function (err) {
+          output.textContent = 'Failed to load stats: ' + err.message;
+          console.error('fetchStats error:', err);
+        });
+    }
+  </script>
 </body>
 </html>
